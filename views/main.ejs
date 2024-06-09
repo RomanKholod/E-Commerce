@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Магазин Товарів</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/favicon.png" type="image/png">
+
+</head>
+<body>
+    <header>
+        <h1>Магазин побутової техніки</h1>
+        <nav>
+            <ul>
+                <li class="menu-item"><a href="/">Головна</a></li>
+                <li class="menu-item"><a href="/catalog" id="catalog-link">Каталог товару</a></li>
+                <li class="menu-item"><a href="/about">Контакти</a></li>
+                <li class="menu-item"><a href="/profile">Профіль</a></li>
+                <li><a href="/registration" class="login-registration-images"><img class="icon" src="img/regicon.png" alt=""></a></li>
+                <li><a href="/login" class="login-registration-images"><img class="icon" src="img/logicon.png" alt=""></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Секція "Популярні товари" -->
+        <section class="featured-products">
+            <h2>Популярні товари</h2>
+            <div class="product">
+                <img class="smartphone" src="img\tel2.jpg" alt="Товар 1">
+                <h3>Товар 1</h3>
+                <p>Ціна: $50</p>
+                <button>Додати до кошика</button>
+            </div>
+        
+            <div class="product">
+                <img class ="laptop" src="img\lap2.jpg" alt="Товар 2">
+                <h3>Товар 2</h3>
+                <p>Ціна: $60</p>
+                <button>Додати до кошика</button>
+            </div>
+
+            <div class="product">
+                <img class="laptop" src="img\lap1.jpg" alt="Товар 2">
+                <h3>Товар 3</h3>
+                <p>Ціна: $60</p>
+                <button>Додати до кошика</button>
+            </div>
+        </section>
+
+        <!-- Секція "Нові надходження" -->
+        <section class="latest-products">
+            <h2>Нові надходження</h2>
+            <div class="product-container">
+            <div class="product">
+                <img class="laptop"  src="img\lap1.jpg" alt="">
+                <h3>Новий товар 1</h3>
+                <p>Ціна: $70</p>
+                <button>Додати до кошика</button>
+            </div>
+        
+            <div class="product">
+                <img class="laptop" src="img\lap2.jpg "alt="" >
+                <h3>Новий товар 2</h3>
+                <p>Ціна: $80</p>
+                <button>Додати до кошика</button>
+            </div>
+
+            <div class="product">
+                <img class="smartphone" src="img\tel1.png" alt="">
+                <h3>Новий товар 3</h3>
+                <p>Ціна: $80</p>
+                <button>Додати до кошика</button>
+            </div>
+
+            <div class="product">
+                <img class="smartphone"src="img\tel2.jpg" alt="">
+                <h3>Новий товар 4</h3>
+                <p>Ціна: $80</p>
+                <button>Додати до кошика</button>
+            </div>
+
+            <div class="product">
+                <img src="new_product2.jpg" alt="">
+                <h3>Новий товар 5</h3>
+                <p>Ціна: $80</p>
+                <button>Додати до кошика</button>
+            </div>
+        </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Магазин Товарів. Усі права захищено.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginRegistrationImages = document.querySelectorAll('.login-registration-images');
+            const loggedIn = <%= loggedIn %>; 
+    
+            for (const image of loginRegistrationImages) {
+                if (loggedIn) {
+                    image.style.display = 'none'; 
+                } else {
+                    image.style.display = 'block'; 
+                }
+            }
+        });
+    </script>
+    
+    
+</body>
+</html>
+
+

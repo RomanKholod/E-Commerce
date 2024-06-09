@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Особиста сторінка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Особиста сторінка</h1>
+        <nav>
+            <ul>
+                <li class="menu-item"><a href="/">Головна</a></li>
+                
+            </ul>
+
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Вітаємо, <span id="username-placeholder"><%= username %>,<%=roles%></span></h2>
+        <p>Це ваша особиста сторінка. Тут ви можете переглядати та редагувати свої дані.</p>
+        <p>Якщо ви бажаєте вийти, <a href="/logout">вийдіть з аккаунту</a>.</p>
+
+        
+        <h3>Змінити ім'я:</h3>
+        <input type="text" id="new-username" placeholder="Нове ім'я">
+        <button id="save-username-button">Зберегти</button>
+        <div id="username-change-message"></div>
+        
+        
+
+        <!-- Форма для зміни пароля -->
+       
+        <h3>Змінити пароль:</h3>
+        <form id="change-password-form">
+            <input type="password" id="current-password" name="currentPassword" placeholder="Поточний пароль">
+            <input type="password" id="new-password" name="newPassword" placeholder="Новий пароль">
+            <button id="save-password-button" type="submit">Зберегти</button>
+            <div id="password-change-message"></div>
+        </form>
+        
+        
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const newUsernameInput = document.getElementById('new-username');
+    const saveUsernameButton = document.getElementById('save-username-button');
+    const usernameChangeMessage = document.getElementById('username-change-message');
+    const usernamePlaceholder = document.getElementById('username-placeholder');
+
+    saveUsernameButton.addEventListener('click', function() {
+        const newUsername = newUsernameInput.value;
+
+        // Оновити ім'я користувача на сторінці
+        usernamePlaceholder.textContent = newUsername;
+        usernameChangeMessage.textContent = 'Імя користувача успішно оновлено.Авторизуйтесь ще раз';
+
+        // Отправка нового імені на сервер
+        updateUsernameOnServer(newUsername);
+    });
+
+    function updateUsernameOnServer(newUsername) {
+        fetch('/changeusername', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newUsername }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Помилка оновлення імені користувача на сервері');
+                }
+            })
+            .then(data => {
+                // Успішна відповідь від серверу
+                usernameChangeMessage.textContent = data;
+            })
+            .catch(error => {
+                // Обробка помилок
+                console.error(error);
+                usernameChangeMessage.textContent = 'Помилка оновлення імені користувача';
+            });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPasswordInput = document.getElementById('current-password');
+    const newPasswordInput = document.getElementById('new-password');
+    const savePasswordButton = document.getElementById('save-password-button');
+    const passwordChangeMessage = document.getElementById('password-change-message');
+
+    savePasswordButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const currentPassword = currentPasswordInput.value;
+        const newPassword = newPasswordInput.value;
+
+        // Перевірка довжини паролю
+        if (newPassword.length < 4) {
+            passwordChangeMessage.textContent = 'Пароль повинен мати принаймні 4 символи.';
+            return; // Виходимо з функції, якщо пароль недостатньо довгий
+        }
+
+        // Отправка нового паролю на сервер
+        //updatePasswordOnServer(newPassword);
+        checkCurrentPassword(currentPassword, newPassword);
+    });
+
+
+function checkCurrentPassword(currentPassword, newPassword) {
+    fetch('/checkpassword', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ currentPassword }),
+    })
+    .then(response => {
+        if (response.ok) {
+            // Поточний пароль вірний, можна змінювати пароль
+            updatePasswordOnServer(newPassword);
+        } else {
+            passwordChangeMessage.textContent = 'Неправильний поточний пароль';
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        passwordChangeMessage.textContent = 'Помилка перевірки поточного паролю';
+    });
+}
+
+    function updatePasswordOnServer(newPassword) {
+        fetch('/changepassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newPassword }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Помилка оновлення паролю на сервері');
+                }
+            })
+            .then(data => {
+                // Успішна відповідь від серверу
+                passwordChangeMessage.textContent = data;
+            })
+            .catch(error => {
+                // Обробка помилок
+                console.error(error);
+                passwordChangeMessage.textContent = 'Помилка оновлення паролю';
+            });
+    }
+
+
+});
+
+    </script>
+       
+</body>
+</html>

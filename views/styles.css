@@ -1,0 +1,304 @@
+title{
+    color: rgb(255, 255, 255);
+}
+/* Стилізація заголовка */
+header {
+    background-color: #333;
+ 
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    color: whitesmoke;
+}
+
+/* Стилізація навігаційного меню */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff6b;
+    font-weight: bold;
+}
+
+/* Стилізація секцій товарів */
+section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Стилізація футера */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+                                     /*catalog*/
+/* Стилізація заголовка */
+h1 {
+    background-color: #000000;
+    color: #000000;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+}
+
+/* Стилізація списку категорій */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+li {
+    margin: 10px 0;
+}
+
+.menu-item a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #fff;
+    text-decoration:solid ;
+    border-radius: 5px;
+    
+}
+
+/* Наведення курсора на кнопки */
+.menu-item a:hover {
+    background-color: #757d7e;
+}
+
+
+/* Поділ на секції "Популярне останнє*/
+/* Стилізація секції "Категорії товарів" */
+.product-categories {
+    background-color: #616161;
+    padding: 20px;
+    text-align: center;
+}
+
+.product-categories h2 {
+    color: #333;
+}
+
+.product-categories ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product-categories li {
+    margin: 10px 0;
+}
+
+.product-categories a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #5e5e5e;
+    border: 2px solid #333;
+    border-radius: 5px;
+    display: inline-block
+}
+/* Стилізація контейнера для товарів */
+.product-container {
+    display: flex;
+    flex-wrap: nowrap; /* Заборона переносу на інший рядок */
+    overflow-x: auto; /* Прокрутка, якщо товарів багато */
+}
+
+/* Стилізація окремого товару */
+.product {
+    flex: 0 0 auto; /* Забезпечує рівномірний розмір для кожного товару */
+    margin-right: 20px; /* Відступ між товарами */
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+}
+/* Стилізація навігації */
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #7c6d6d;
+    margin: 0;
+    padding: 10px 0;
+}
+
+nav li {
+    margin: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #777272;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #0e0d0d;
+}
+/* Загальні стилі для сторінок входу і реєстрації */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
+
+p {
+    text-align: center;
+}
+
+a {
+    color: #333;
+}
+
+/* Специфічні стилі для сторінки входу (login.html) */
+.login-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Специфічні стилі для сторінки реєстрації (registration.html) */
+.registration-container {
+    text-align: center;
+    margin-top: 50px;
+}
+/* CSS стилі для класу заголовка */
+.page-title {
+    text-align:left;
+    font-size: 2rem; /* Збільшити розмір шрифта */
+    color: #fdfdfd;
+    margin-bottom: 0px; /* Додати відступ знизу */
+}
+
+/* CSS стилі для класу списку категорій */
+.category-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+/* CSS стилі для класу елемента списку */
+.category-item {
+    margin: 30px 0;
+}
+
+/* CSS стилі для класу посилання категорії */
+.category-link {
+    display: block;
+    padding: 50px 40px;
+    background-color: #434c52;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+    font-weight: bold; /* Зробити текст жирним */
+    font-size: x-large;
+    text-transform: uppercase;
+ 
+}
+
+/* CSS стилі для класу посилання категорії при наведенні */
+.category-link:hover {
+    background-color: #252424;
+    color: #fff; /* Змінити колір тексту при наведенні */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Додати тінь при наведенні */
+}
+.laptop{
+/* CSS стилі для зміни розміру картинок */
+    width: 400px; /* Ширина картинки 300 пікселів */
+    height: auto; /* Автоматично обчислює висоту, щоб зберегти пропорції */
+}
+.smartphone{
+    width:300px;
+    height: 400px;
+}
+.icon {
+    width: 44px;
+    height: 44px;
+    vertical-align: middle;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Список смартфонів</title>
+</head>
+<body>
+  <h1>Список смартфонів</h1>
+  <ul>
+    <% smartphones.forEach(function(smartphone) { %>
+      <li>
+        <h2><%= smartphone.model %></h2>
+        <p>Ціна: $<%= smartphone.price %></p>
+        <p><%= smartphone.description_ %></p>
+        <img src="data:image/jpeg;base64,<%= smartphone.img.toString('base64') %>" alt="Зображення смартфона">
+      </li>
+    <% }); %>
+  </ul>
+</body>
+</html>

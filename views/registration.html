@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/favicon.png" type="image/png">
+</head>
+<body>
+    <h1>Реєстрація </h1>
+    <form action="/register" method="POST">
+        <!-- Оновлено URL для action -->
+        <label for="username">Ім'я користувача:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="email">Електронна пошта:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="role">Зареєструватися як:</label>
+        <div style="display: flex; align-items: center; ">
+            <input type="radio" id="buyer" name="role" value="buyer" required>
+            <label for="buyer">Покупець</label>
+            <span style="margin: 0 100px;">&nbsp;</span> <!-- Вставка відстані -->
+            <input type="radio" id="seller" name="role" value="seller" required>
+            <label for="seller">Продавець</label>
+        </div>
+        <br><br>
+
+        <button type="submit">Зареєструватися</button>
+    </form>
+    <p>Вже маєте акаунт? <a href="/login">Увійти</a></p>
+    <p id="message_email"></p>
+  
+
+    <script>
+document.querySelector('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const roles = document.querySelector('input[name="role"]:checked').value;
+    const messageEmail = document.getElementById('message_email');
+
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password, roles }),
+    });
+
+    const data = await response.json();
+    messageEmail.innerText = data.message_email;
+
+    if (!roles) {
+        alert('Будь ласка, виберіть роль');
+    } else if (data.message_pass) {
+        alert(data.message_pass);
+    } else if (data.redirectTo) {
+        window.location.href = data.redirectTo;
+    }
+});
+
+    </script>
+</body>
+</html>
+

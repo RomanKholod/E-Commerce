@@ -1,0 +1,122 @@
+const express = require('express');
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
+
+const app = express();
+const port = 8000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '1',
+  database: 'Usersdb',
+});
+
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database: ' + err.stack);
+    return;
+  }
+  console.log('Connected to the database ');
+});
+
+// Обробка GET-запиту на /success.html
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/registration.html');
+});
+
+app.post('/register', (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (password.length < 4) {
+      res.status(400).send('Пароль повинен мати принаймні 4 символи');
+      return; // Зупинка виконання коду
+  }
+
+  // Перевірка, чи існує користувач з таким самим ім'ям
+  db.query('SELECT * FROM users WHERE username = ?', [username], (error, results) => {
+      if (error) {
+          console.error('Error checking username: ' + error);
+          res.status(500).send('Error checking username');
+      } else if (results.length > 0) {
+          // Якщо результат не порожній, це означає, що користувач з таким ім'ям вже існує
+          res.status(200).send('Це імя користувача вже зайняте');
+      } else {
+          // Перевірка, чи існує користувач з такою самою адресою електронної пошти
+          db.query('SELECT * FROM users WHERE email = ?', [email], (emailError, emailResults) => {
+              if (emailError) {
+                  console.error('Error checking email: ' + emailError);
+                  res.status(500).send('Error checking email');
+              } else if (emailResults.length > 0) {
+                  // Якщо результат не порожній, це означає, що користувач з такою поштою вже існує
+                  res.status(200).send('Ця адреса електронної пошти вже використовується');
+              } else {
+                  // Якщо результати порожні, то можна додати нового користувача
+                  const newUser = {
+                      username: username,
+                      email: email,
+                      password: password, // Не рекомендується зберігати паролі у текстовому вигляді
+                  };
+
+                  db.query('INSERT INTO users SET ?', newUser, (insertError, insertResult) => {
+                      if (insertError) {
+                          console.error('Error inserting user: ' + insertError);
+                          res.status(500).send('Error registering user');
+                      } else {
+                          console.log('User registered with ID: ' + insertResult.insertId);
+                          res.redirect('/main.html');
+                      }
+                  });
+              }
+          });
+      }
+  });
+});
+
+
+  
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    console.log(email, password)
+    const secretKey = 'key';
+  
+    // Перевірка введених даних з базою даних
+    db.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
+      if (error) {
+        console.error('Error checking email: ' + error);
+        res.status(500).send('Error checking email');
+      } else if (results.length === 0) {
+        res.status(401).json({ message: 'Користувача з такою електронною поштою не знайдено' });
+      } else {
+        // Якщо користувача знайдено, перевірте пароль
+        const user = results[0];
+        if (user.password === password) {
+          // Генеруємо токен на сервері і виводимо його в консоль
+          const token = jwt.sign({ email }, secretKey, { expiresIn: '2h' });
+          console.log("Token:", token);
+          res.cookie('token', token);
+          res.status(200).json({ token });
+        } else {
+          res.status(401).json({ message: 'Неправильний пароль' });
+        }
+      }
+    });
+  });
+
+  
+ 
+  
+
+// Решта коду додатку
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+
+});
